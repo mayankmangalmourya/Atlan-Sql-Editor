@@ -1,9 +1,42 @@
 import React from 'react'
-import {Container} from "react-bootstrap";
+import {Container, Row, Col} from "react-bootstrap";
 import FILE_NAMES from "./data/fileNames";
 import { closeTab, getPropTypes, openNewTab } from "./data/utils";
 
 function sideBar(params) {
+
+  const menulink = FILE_NAMES.map((fileName) =>(
+    <Row className="nav-item" key={fileName}>
+      <Col>
+        <a
+          href={`/${fileName}`}
+          className={
+            fileName === params.activiKey ? "nav-link active" : "nav-link"
+          }
+          onClick={(e)=>{
+            e.preventDefault();
+            openNewTab(
+              {
+                title: fileName,
+                entries: [],
+              },
+              params.tabs,
+              params.setTabs,
+              params.setActiveKey,
+              `// Write Down you Query Here.`
+              `select * from \`${fileName}\``
+            );
+          }}
+        >
+          
+          {
+            fileName
+          }
+        </a>
+      </Col>
+    </Row>
+  ))
+
     return (
       <Container
         fluid
