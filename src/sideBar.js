@@ -1,7 +1,18 @@
 import React from 'react'
-import {Container, Row, Col} from "react-bootstrap";
+import {Container, Row, Col, CloseButton} from "react-bootstrap";
 import FILE_NAMES from "./data/fileNames";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretDown, faCaretLeft, faTable } from "@fortawesome/free-solid-svg-icons";
 import { closeTab, getPropTypes, openNewTab } from "./data/utils";
+
+sideBar.propTypes = getPropTypes(
+  "activeKey",
+  "tabs",
+  "setTabs",
+  "setActiveKey",
+  "mobile"
+);
+
 
 function sideBar(params) {
 
@@ -28,14 +39,53 @@ function sideBar(params) {
             );
           }}
         >
-          
+          <FontAwesomeIcon
+            icon={fileName === params.activiKey ? faCaretDown:faCaretLeft}
+          />
           {
             fileName
           }
         </a>
       </Col>
     </Row>
-  ))
+  ));
+
+  // write opentab logic here
+
+  const openTabs = params.tabs.map((tab) => (
+    <Row className="nav-item align-items-center" key={tab.eventKey}>
+      <Col xs={10}>
+        <a
+          href={`/${tab.title}`}
+          className={
+            tab.eventKey === params.activeKey ? "nav-link active" : "nav-link"
+          }
+          onClick={(e) => {
+            e.preventDefault();
+            params.setActiveKey(tab.eventKey);
+          }}
+        >
+          <FontAwesomeIcon
+            icon={tab.eventKey === params.activeKey ? faCaretDown : faCaretLeft}
+          />{" "}
+          <FontAwesomeIcon icon={faTable} /> {tab.title}{" "}
+        </a>
+      </Col>
+      <Col xs={2}>
+        <CloseButton
+          style={{
+            fontSize: "0.5rem",
+          }}
+          onClick={(e) => {
+            e.stopPropagation();
+            const [newTabs, newActiveKey] = closeTab(tab.eventKey, params.tabs);
+            params.setTabs(newTabs);
+            params.setActiveKey(newActiveKey);
+          }}
+        />
+      </Col>
+    </Row>
+  ));
 
     return (
       <Container
@@ -51,13 +101,13 @@ function sideBar(params) {
             <span>All Table</span>
           </div>
         </p>
-        <Container fluid>
-
+        <Container fluid className='tableLinks'>
+          {menulink}
         </Container>
         <hr />
         <p>Recent Tabs</p>
-        <Container fluid>
-
+        <Container fluid className='tabLinks'>
+          {openTabs}
         </Container>
       </Container>
     );
