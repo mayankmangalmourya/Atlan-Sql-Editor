@@ -1,4 +1,4 @@
-import { faArrowAltCircleDown, faPlay, faSave } from "@fortawesome/free-solid-svg-icons";
+import { faArrowCircleDown, faArrowAltCircleDown, faPlay, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, ButtonGroup, ButtonToolbar } from "react-bootstrap";
 

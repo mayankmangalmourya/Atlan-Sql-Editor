@@ -2,10 +2,10 @@ import React from 'react'
 import {Container, Row, Col, CloseButton} from "react-bootstrap";
 import FILE_NAMES from "./data/fileNames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown, faCaretLeft, faTable } from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown, faCaretRight, faTable } from "@fortawesome/free-solid-svg-icons";
 import { closeTab, getPropTypes, openNewTab } from "./data/utils";
 
-sideBar.propTypes = getPropTypes(
+SideBar.propTypes = getPropTypes(
   "activeKey",
   "tabs",
   "setTabs",
@@ -14,7 +14,7 @@ sideBar.propTypes = getPropTypes(
 );
 
 
-function sideBar(params) {
+function SideBar(params) {
 
   const menulink = FILE_NAMES.map((fileName) =>(
     <Row className="nav-item" key={fileName}>
@@ -34,13 +34,14 @@ function sideBar(params) {
               params.tabs,
               params.setTabs,
               params.setActiveKey,
-              `// Write Down you Query Here.`
               `select * from \`${fileName}\``
             );
           }}
         >
           <FontAwesomeIcon
-            icon={fileName === params.activiKey ? faCaretDown:faCaretLeft}
+            icon={
+              fileName === params.activeKey ? faCaretDown : faCaretRight
+            }
           />
           {
             fileName
@@ -66,7 +67,7 @@ function sideBar(params) {
           }}
         >
           <FontAwesomeIcon
-            icon={tab.eventKey === params.activeKey ? faCaretDown : faCaretLeft}
+            icon={tab.eventKey === params.activeKey ? faCaretDown : faCaretRight}
           />{" "}
           <FontAwesomeIcon icon={faTable} /> {tab.title}{" "}
         </a>
@@ -91,26 +92,26 @@ function sideBar(params) {
       <Container
         fluid
         style={{
-          height: `${params.mobile ? "100%" : "calc(100vh - 8rem)"}`,
+          height: `${params.mobile ? "100%" : "calc(100vh - 9rem)"}`,
         }}
         className="sidebar"
-        id={`sidebar${params.mobile ? "mobile" : ""}`}
+        id={`sidebar${params.mobile ? "mobile" : " "}`}
       >
-        <p>
+        <p className="text-secondary heading mt-3">
           <div>
             <span>All Table</span>
           </div>
         </p>
-        <Container fluid className='tableLinks'>
+        <Container fluid className="tableLinks">
           {menulink}
         </Container>
         <hr />
-        <p>Recent Tabs</p>
-        <Container fluid className='tabLinks'>
+        <p className="text-secondary heading mt-3">Recent Tabs</p>
+        <Container fluid className="tabLinks">
           {openTabs}
         </Container>
       </Container>
     );
 }
 
-export default sideBar;
+export default SideBar;

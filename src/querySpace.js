@@ -4,7 +4,7 @@ import "codemirror/lib/codemirror.css";
 import "codemirror/theme/rubyblue.css";
 import { getPropTypes } from "./data/utils";
 
-function querySpace(params) {
+function QuerySpace(params) {
     return(
 
         <Fragment>
@@ -21,6 +21,6 @@ function querySpace(params) {
     );
 }
 
-querySpace.propTypes = getPropTypes("defaultQuery");
+QuerySpace.propTypes = getPropTypes("defaultQuery");
 
-export default querySpace;
+export default QuerySpace;
